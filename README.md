@@ -1,4 +1,4 @@
-# WebApplication-EvolutionEngine
+# WebApplication-EvolutionEngine Timetable
 
 
 An effortless way to find the best schedule that's meet your school workers and classes requirements.
