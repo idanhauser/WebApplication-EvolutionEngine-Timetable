@@ -26,6 +26,8 @@ An effortless way to find the best schedule that's meet your school workers and 
 
 
 ALGORITHM INFO
+
+
 individual - a TT solution
 fitness - the grade of a solution (range of 0 – 100)
 population - a group of solutions
