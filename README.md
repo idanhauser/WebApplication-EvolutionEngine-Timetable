@@ -27,11 +27,13 @@ An effortless way to find the best schedule that's meet your school workers and 
 
 ALGORITHM INFO
 
+Individual - a TT solution
 
-individual - a TT solution
-fitness - the grade of a solution (range of 0 – 100)
-population - a group of solutions
-each generation contains a population
+Fitness - the grade of a solution (range of 0 – 100)
+
+Population - a group of solutions
+
+Each generation contains a population
 
 
 
