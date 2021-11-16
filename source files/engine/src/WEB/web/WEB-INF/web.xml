@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/pages/LoginPage/Login</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>usersAndEnginesServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.usersAndEnginesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>usersAndEnginesServlet</servlet-name>
+        <url-pattern>/usersList</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UsersDataServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.UsersDataServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsersDataServlet</servlet-name>
+        <url-pattern>/usersData</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AllEnginesTableServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.AllEnginesTableServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AllEnginesTableServlet</servlet-name>
+        <url-pattern>/allEnginesTable</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>getSpecificEnginePageServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.getSpecificEnginePageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>getSpecificEnginePageServlet</servlet-name>
+        <url-pattern>/pages/UsersHomePage/getSpecificEnginePage</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CreateNewEngineServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.CreateNewEngineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateNewEngineServlet</servlet-name>
+        <url-pattern>/pages/UsersHomePage/ipo/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EnginesTableServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.EnginesTableServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EnginesTableServlet</servlet-name>
+        <url-pattern>/myEnginesTable</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>EnginePageServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.EnginePageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>EnginePageServlet</servlet-name>
+        <url-pattern>/engineData</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>singleEngineDataTableServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.singleEngineDataTableServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>singleEngineDataTableServlet</servlet-name>
+        <url-pattern>/dataTable</url-pattern>
+    </servlet-mapping>
+
+<!--    <servlet>-->
+<!--        <servlet-name>UserMessagesServlet</servlet-name>-->
+<!--        <servlet-class>WebUI.Servlets.UserMessagesServlet</servlet-class>-->
+<!--    </servlet>-->
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>UserMessagesServlet</servlet-name>-->
+<!--        <url-pattern>/userMessages</url-pattern>-->
+<!--    </servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>ChatServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.Chat.ChatServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChatServlet</servlet-name>
+        <url-pattern>/chat</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SaveDataToFileServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.SaveDataToFileServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SaveDataToFileServlet</servlet-name>
+        <url-pattern>/saveFile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ChangeEngineConfigurationServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.ChangeEngineConfigurationServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangeEngineConfigurationServlet</servlet-name>
+        <url-pattern>/pages/SingleEnginePage/changeSettings/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StartEngineServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.StartEngineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StartEngineServlet</servlet-name>
+        <url-pattern>/pages/SingleEnginePage/startEngine/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>StopEngineServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.StopEngineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StopEngineServlet</servlet-name>
+        <url-pattern>/pages/SingleEnginePage/stopEngine/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PauseEngineServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.PauseEngineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PauseEngineServlet</servlet-name>
+        <url-pattern>/pages/SingleEnginePage/pauseEngine/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ResumeEngineServlet</servlet-name>
+        <servlet-class>WebUI.Servlets.ResumeEngineServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ResumeEngineServlet</servlet-name>
+        <url-pattern>/pages/SingleEnginePage/resumeEngine/</url-pattern>
+    </servlet-mapping>
+</web-app>

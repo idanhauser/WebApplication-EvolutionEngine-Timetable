@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <title>Engine Information</title>
+
+    <script src="../../common/jquery.canvasjs.min.js"></script>
+    <script src="../../common/canvasjs.react.js"></script>
+    <script src="../../common/canvasjs.min.js"></script>
+
+    <script src="../../common/jquery-3.6.0.js"></script>
+    <script src="../../common/context-path-helper.js"></script>
+    <script src="singleEngine.js"></script>
+    <script src="../../common/jquery.growl.js" type="text/javascript"></script>
+    <link href="../../common/jquery.growl.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="singleEngine.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+</head>
+
+<body id="page-top">
+<div id="wrapper">
+    <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
+         style="height: 2000px;">
+        <div class="container-fluid d-flex flex-column p-0">
+            <h1 style="font-size: 25.6px;color: rgb(6,13,93);">Online users</h1>
+            <div class="input">
+                <ul class="navbar-nav text-light" id="usersList">
+                </ul>
+            </div>
+            <div class="text-center d-none d-md-inline">
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+
+            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+
+                <div style="width: 5px; height: 100px"></div>
+                <div class="container-fluid">
+
+                    <a style="float: left; width: 150px" onclick="onStartEngine() " class="btn btn-info btn-lg active"
+                       role="button"
+                       id="StartEngineButton">Start Engine</a>
+                    <a style="float: left; display:none" onclick="onPauseEngine()" class="btn btn-info btn-lg active"
+                       role="button" id="PauseEngineButton">Pause Engine</a>
+                    <a style="float: left; display:none" onclick="onChangeEngine()" class="btn btn-info btn-lg active"
+                       role="button" id="ChangeEngineConfButton">Change Engine's Configurations</a>
+                    <a style="float: left; display:none" onclick="onContinueEngine()" class="btn btn-info btn-lg active"
+                       role="button" id="ContinueEngineButton" style="display:none">Resume Engine</a>
+                    <a style="float: left;display:none; width: 150px" onclick="onStopEngine()"
+                       class="btn btn-info btn-lg active"
+                       role="button" id="StopEngineButton" style="display:none">Stop Engine</a>
+
+                </div>
+
+                <div class="container-fluid">
+                    <div class="row" style="width: 320px;height: 30px">
+                        <div class="col" id="StockNameTextField" style="width: 160px;height: 60px;">
+                            <span style="color: blue" id="userDataSpan"></span>
+                        </div>
+                    </div>
+                    <a style="float: left;margin-right: 20%;" href="../UsersHomePage/usersHome.html"
+                       class="btn btn-info btn-lg active"
+                       role="button">Go back to all engines</a>
+                    <a href="../chatroom/chatroom.html" class="btn btn-info btn-lg active" role="button"
+                       style="position: absolute; right:10px;">Go To Chat</a>
+                </div>
+            </nav>
+
+            <!--Change Setting Dialog-->
+            <div id="ChangeSettings-div" class="ChangeSettingsDiv">
+                <dialog id="ChangeSettings-dialog">
+                    <form action="changeSettings/" method="post" id="ChangeSettings-form">
+                        <section>
+                            <!--                            <input type="checkbox" id="elitismCB" name="elitismCB" value="0" onclick="onElitism()">-->
+                            <label for="Elitism">Elitism:</label>
+                            <input disabled type="float" id="Elitism" name="Elitism" min="0" max="2147483647"><br><br>
+
+                            <!--    <input type="checkbox" id="selectionCB" name="selectionCB" value="0"              onclick="onSelection()">-->
+                            <label for="selection">Selection:</label>
+                            <select disabled id="selection" name="selection" onchange="SelectionChecked(this)">
+                                <option selected="selected" value="RouletteWheel">RouletteWheel</option>
+                                <option value="Truncation">Truncation</option>
+                                <option value="Tournament">Tournament</option>
+                            </select> <br><br>
+
+                            <div id="probabilitySelectionDiv" style="display:none">
+                                <label for="probabilitySelection">Probability for
+                                    selection:</label>
+                                <input disabled type="number" id="probabilitySelection" name="probabilitySelection"
+                                       min="0"
+                                       max="1"
+                                       step="0.1"><br><br>
+                            </div>
+
+                            <!--                            <input type="checkbox" id="crossoverCB" name="crossoverCB" value="0"-->
+                            <!--                                   onclick="onCrossover()">-->
+                            <label for="crossover">Crossover:</label>
+                            <select disabled id="crossover" name="crossover" onchange="CrossoverSelected(this)">
+                                <option selected="selected" id="DayTimeOriented" value="DayTimeOriented">
+                                    DayTimeOriented
+                                </option>
+                                <option id="AspectOriented" value="AspectOriented">AspectOriented</option>
+                            </select> <br><br>
+
+                            <div id="AspectOrientedDiv" style="display:none">
+                                <label for="AspectOrientedType">Aspect Oriented Type:</label>
+                                <select disabled id="AspectOrientedType" name="AspectOrientedType">
+                                    <option value="TEACHER">Teacher oriented</option>
+                                    <option value="StudyClass">Class oriented</option>
+                                </select> <br><br>
+                            </div>
+
+                            <div id="CuttingPointsDiv" style="display:none">
+                                <label for="CuttingPoints">Cutting points:</label>
+                                <input type="number" id="CuttingPoints" name="CuttingPoints" min="2" max="2147483647"><br><br>
+                            </div>
+                            <!--                            <input type="checkbox" id="mutationsCB" name="mutationsCB" value="0"       onclick="onMutations()">-->
+
+                            <label for="mutationsDiv">Mutation:</label>
+                            <div id="mutationsDiv">
+                                <input disabled type="checkbox" id="SizerMutationCB" name="SizerMutationCB" value="0"
+                                       onclick="onSizerMutation()">
+                                <label for="SizerMutationCB">Sizer Mutation</label>
+                                <div id="SizerMutationDiv" style="display:none">
+                                    <label for="TotalTupples">Total Tupples:</label>
+                                    <input type="number" id="TotalTupples" name="TotalTupples" max="2147483647" min="-2147483648"><br><br>
+                                </div>
+
+
+                                <input disabled type="checkbox" id="FlippingMutationCB"
+                                       name="FlippingMutationCB" value="0"
+                                       onclick="onFlippingMutation()">
+                                <label for="FlippingMutationCB">Flipping Mutation</label>
+                                <div id="FlippingMutationDiv" style="display:none">
+                                    <label for="FlippingMutationComponent">Component to change:</label>
+                                    <select id="FlippingMutationComponent" name="FlippingMutationComponent">
+                                        <option value="Day">Day</option>
+                                        <option value="Hour">Hour</option>
+                                        <option value="StudyClass">Class</option>
+                                        <option value="Teacher">Teacher</option>
+                                    </select> <br><br>
+
+                                    <label for="MaxTupples">Max Tupples:</label>
+                                    <input type="number" id="MaxTupples" name="MaxTupples" min="0" max="2147483647"><br><br>
+                                </div>
+
+                                <div id="probabilityMutationDiv" style="display:none">
+                                    <label for="probabilityMutation">Probability for mutations:</label>
+                                    <input disabled type="number" id="probabilityMutation" name="probabilityMutation"
+                                           min="0"
+                                           max="1" step="0.1"><br><br>
+                                    <p id="ipo-dialog-error" style="color: red"></p>
+
+                                </div>
+
+
+                                <p id="ChangeSettings-dialog-error" style="color: red"></p>
+
+                            </div>
+                        </section>
+                        <menu>
+                            <button id="ChangeSettings-cancel" type="reset" onclick="closeChangeSettingsDialog()">
+                                Cancel
+                            </button>
+                            <button id="ChangeSettings-submit" type="submit">Confirm</button>
+                        </menu>
+                    </form>
+                </dialog>
+            </div>
+            <!--END Change Setting Dialog-->
+
+            <div class="container-fluid">
+
+                <h4 id="EngineName" class="text-dark mb-0">hey</h4>
+
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Rules List</h3>
+                </div>
+
+                <div>
+                    <table id="RulesTable" class="RulesTable">
+                        <thead>
+                        <tr>
+                            <th>Rule's Name</th>
+                            <th>Difficulty</th>
+                            <th>Score</th>
+                        </tr>
+                        </thead>
+                        <tbody class="tableBody">
+                        </tbody>
+                    </table>
+                </div>
+                <!--END Rules Table-->
+
+                <!--Teachers Table-->
+                <br><br>
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Teachers List</h3>
+                </div>
+
+                <table id="TeachersTable" class="TeachersTable">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>ID</th>
+                        <th>Teaching Subjects</th>
+                        <th>Working Hours</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tableBody">
+                    </tbody>
+                </table>
+                <!--END Teachers Table-->
+
+                <!--Subjects Table-->
+                <br><br>
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Subjects List</h3>
+                </div>
+
+                <table id="SubjectsTable" class="RulesTable">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>ID</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tableBody">
+                    </tbody>
+                </table>
+                <!--END Subjects Table-->
+
+                <!--Classes Table-->
+                <br><br>
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Classes List</h3>
+                </div>
+
+                <table id="ClassesTable" class="TeachersTable">
+                    <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>ID</th>
+                        <th>Requirements</th>
+                    </tr>
+                    </thead>
+                    <tbody class="tableBody">
+                    </tbody>
+                </table>
+                <!--END Classes Table-->
+
+                <!--Schedule Table-->
+                <br><br>
+                <div class="d-sm-flex justify-content-between align-items-center mb-4">
+                    <h3 class="text-dark mb-0">Best Solution</h3>
+                </div>
+
+                <div style="display: flex">
+                    <h9 class="text-dark mb-0">Current Generation:</h9>
+                    <div class="col" style="width: 160px;height: 60px;">
+                        <span style="color: black" id="CurrentGeneration"></span>
+                    </div>
+                    <h9 class="text-dark mb-0">Best Fitness:</h9>
+                    <div class="col" style="width: 160px;height: 60px;">
+                        <span style="color: black" id="BestFitness"></span>
+                    </div>
+                </div>
+                <section
+                        style="position: relative; left: 30%;position: relative;left: 30%;display: flex;flex-wrap: nowrap;flex-direction: row;align-items: center;">
+                    <label for="ShowAs">Show As:</label>
+                    <select id="ShowAs" name="ShowAs" onchange="TableChecked(this)">
+                        <option selected="selected" value="Raw">Raw</option>
+                        <option id="Teachers" value="Teachers">Teachers</option>
+                        <option id="Classes" value="Classes">Classes</option>
+                    </select> <br><br>
+
+                    <div id="TeachersDiv" style="display:none ;position: relative; left: 4%">
+                        <select id="TeachersType" name="TeachersType">
+                        </select>
+                    </div>
+
+                    <div id="ClassesDiv" style="display:none ;position: relative; left: 4%">
+                        <select id="ClassesType" name="ClassesType">
+                        </select>
+                    </div>
+                </section>
+
+                <div style="height: 25px; width: 5px;"></div>
+                <div class="container-fluid" style="display: flex">
+                    <br><br>
+                    <table id="SingleEngineTable" class="bestSolutionTable" style="height: fit-content" ;>
+                        <thead>
+                        <tr>
+                            <!--                            <th>Sunday</th>-->
+                            <!--                            <th>Monday</th>-->
+                            <!--                            <th>Tuesday</th>-->
+                            <!--                            <th>Wednesday</th>-->
+                            <!--                            <th>Thursday</th>-->
+                            <!--                            <th>Friday</th>-->
+                        </tr>
+                        </thead>
+                        <tbody class="tableBody">
+                        </tbody>
+                    </table>
+                    <!--progress bar-->
+
+
+                    <div style="float: right; position: relative; left: 10%  ">
+                        <label for="GenerationProgress">Generation progress:</label>
+                        <progress style="display: flex; align-items: center;" id="GenerationProgress" value="0"
+                                  max="100">
+
+                        </progress>
+                        <label style="display: flex; align-items: center;" for="FitnessProgress">Fitness
+                            progress:</label>
+                        <progress id="FitnessProgress" value="0" max="100"></progress>
+                        <label style="display: flex; align-items: center;" for="TimeProgress">Time progress:</label>
+
+                        <progress id="TimeProgress" value="0" max="100"></progress>
+
+                    </div>
+                </div>
+                <!--end progress bar-->
+                <!--Schedule Table-->
+
+                <!--GRAPH-->
+                <div>
+                    <br><br><br><br><br><br>
+                    <div id="FitnessGraph" class="row">
+                        <div class="card shadow">
+
+                            <div class="col me-2">
+                                <div class="text-uppercase text-warning fw-bold text-xs mb-1"></div>
+                                <div class="text-dark fw-bold h5 mb-0"></div>
+                                <h1 style="color: var(--bs-red);font-size: 22.6px;font-weight: bold;text-align: center;">
+                                    Fitness Graph</h1>
+                                <div class="card shadow">
+                                    <div class="card-header py-3">
+                                        <p class="text-primary m-0 fw-bold"></p>
+                                    </div>
+                                    <div class="card-body" id="stocksDataTable1">
+                                        <div class="row">
+                                            <div class="col-md-6 text-nowrap">
+                                                <div id="dataTable_length1" class="dataTables_length"
+                                                     aria-controls="dataTable"></div>
+                                            </div>
+                                        </div>
+                                        <div role="grid" aria-describedby="dataTable_info">
+                                            <div id="stockGraph" class="chart-area">
+                                                <div class="chartContainer" id="chartContainer"
+                                                     style="height: 100%; width: 100%;"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--END GRAPH-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/theme.js"></script>
+</body>
+
+</html>

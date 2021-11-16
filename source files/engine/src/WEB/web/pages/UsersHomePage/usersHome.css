@@ -1,0 +1,33 @@
+.newEngineDiv {
+    position: relative;
+    left: 100px;
+    top: 20px;
+    z-index: 20000;
+}
+
+.myRunsTable {
+    /*border: 1px black solid;*/
+    /*border-radius: 6px;*/
+    width: 100%;
+}
+
+.allRunsTable {
+    border: 1px black solid;
+    border-radius: 6px;
+    width: 100%;
+
+}
+
+.gamesDiv tr:hover {
+    background: blanchedalmond;
+}
+
+th {
+    background: #c6ffafa6;
+}
+
+.gamesDiv td {
+    height: 40px;
+    text-align: center;
+
+}

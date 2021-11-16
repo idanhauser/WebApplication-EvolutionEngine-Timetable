@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <title>Users Home Page</title>
+    <script src="../../common/jquery-3.6.0.js"></script>
+    <script src="../../common/context-path-helper.js"></script>
+    <script src="usersHome.js"></script>
+    <script src="../../common/jquery.growl.js" type="text/javascript"></script>
+    <link href="../../common/jquery.growl.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="usersHome.css">
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+</head>
+
+<body id="page-top">
+<div id="wrapper">
+    <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0"
+         style="height: 1000px;">
+        <div class="container-fluid d-flex flex-column p-0">
+            <h1 style="font-size: 25.6px;color: rgb(6,13,93);">Online users</h1>
+            <div class="input">
+                <ul class="navbar-nav text-light" id="usersList">
+                </ul>
+            </div>
+            <div class="text-center d-none d-md-inline">
+            </div>
+        </div>
+    </nav>
+
+    <div style="width: 5px"></div>
+    <div id="ipo-div" class="newEngineDiv">
+        <dialog id="ipo-dialog">
+            <form action="ipo/" method="post" id="ipo-form" enctype="multipart/form-data">
+                <section>
+
+                    <label>Upload XML File: </label>
+                    <input id="uploadForm" action="loadXml" accept=".xml" type="file" name="file1"><br>
+                    <label for="initialPopulation">Initial population:</label>
+                    <input type="number" id="initialPopulation" name="initialPopulation" min="0" max="2147483647"><br><br>
+
+                    <label for="Elitism">Elitism:</label>
+                    <input type="float" id="Elitism" name="Elitism" min="0" max="2147483647"><br><br>
+
+
+                    <label for="selection">Selection:</label>
+                    <select id="selection" name="selection" onchange="SelectionChecked(this)">
+                        <option selected="selected" value="RouletteWheel">RouletteWheel</option>
+                        <option value="Truncation">Truncation</option>
+                        <option value="Tournament">Tournament</option>
+
+                    </select> <br><br>
+
+                    <div id="probabilitySelectionDiv" style="display:none">
+                        <label for="probabilitySelection">probability for selection(Truncation/Tournament):</label>
+                        <input type="number" id="probabilitySelection" name="probabilitySelection" min="0" max="1"
+                               step="0.1"><br><br>
+                    </div>
+                    <label for="crossover">Crossover:</label>
+                    <select id="crossover" name="crossover" onchange="CrossoverChecked(this)">
+                        <option selected="selected" value="DayTimeOriented">DayTimeOriented</option>
+                        <option id="AspectOriented" value="AspectOriented">AspectOriented</option>
+                    </select> <br><br>
+
+                    <div id="AspectOrientedDiv" style="display:none">
+                        <label for="AspectOrientedType">Aspect Oriented Type:</label>
+                        <select id="AspectOrientedType" name="AspectOrientedType">
+                            <option value="TEACHER">Teacher oriented</option>
+                            <option value="STUDY_CLASS">Class oriented</option>
+                        </select> <br><br>
+                    </div>
+                    <label for="CuttingPoints">Cutting points:</label>
+                    <input type="number" id="CuttingPoints" name="CuttingPoints" min="2" max="2147483647"><br><br>
+
+
+                    <input type="checkbox" id="SizerMutationCB" name="SizerMutationCB" value="0"
+                           onclick="onSizerMutation()">
+                    <label for="SizerMutationCB">Sizer Mutation</label>
+                    <div id="SizerMutationDiv" style="display:none">
+                        <label for="TotalTupples">Total Tupples:</label>
+                        <input type="number" id="TotalTupples" name="TotalTupples" max="2147483647" min="-2147483648"><br><br>
+                    </div>
+
+
+                    <input type="checkbox" id="FlippingMutationCB" name="FlippingMutationCB" value="0"
+                           onclick="onFlippingMutation()">
+                    <label for="FlippingMutationCB">Flipping Mutation</label>
+                    <div id="FlippingMutationDiv" style="display:none">
+                        <label for="FlippingMutationComponent">Component to change:</label>
+                        <select id="FlippingMutationComponent" name="FlippingMutationComponent">
+                            <option value="Day">Day</option>
+                            <option value="Hour">Hour</option>
+                            <option value="StudyClass">Class</option>
+                            <option value="Teacher">Teacher</option>
+                        </select> <br><br>
+
+                        <label for="MaxTupples">Max Tupples:</label>
+                        <input type="number" id="MaxTupples" name="MaxTupples" min="0" max="2147483647"><br><br>
+                    </div>
+
+                    <div id="probabilityMutationDiv">
+                        <label for="probabilityMutation">Probability for mutations:</label>
+                        <input disabled type="number" id="probabilityMutation" name="probabilityMutation" min="0"
+                               max="1" step="0.1"><br><br>
+
+                        <p id="ipo-dialog-error" style="color: red"></p>
+                    </div>
+                        <label>Stop conditions:</label>
+                        <div></div>
+
+                        <input type="checkbox" id="GenerationConditionCB" name="GenerationConditionCB" value="0"
+                               onclick="onGenerationCondition()">
+                        <label for="GenerationCondition">Generation Condition:</label><br> <input disabled type="number"
+                                                                                                  id="GenerationCondition"
+                                                                                                  name="GenerationCondition"
+                                                                                                  min="100" max="2147483645"><br><br>
+
+                        <input type="checkbox" id="FitnessConditionCB" name="FitnessConditionCB" value="100"
+                               onclick="onFitnessCondition()">
+                        <label for="FitnessCondition">Fitness Condition:</label><br> <input placeholder="100" disabled
+                                                                                            type="number"
+                                                                                            id="FitnessCondition"
+                                                                                            name="FitnessCondition"
+                                                                                            min="1" max="100" ><br><br>
+
+
+                        <input type="checkbox" id="TimeConditionCB" name="TimeConditionCB" value="0"
+                               onclick="onTimeCondition()">
+                        <label for="TimeCondition">Time Condition (in minutes):</label><br> <input disabled
+                                                                                                   type="number"
+                                                                                                   id="TimeCondition"
+                                                                                                   name="TimeCondition"
+                                                                                                   min="1" max="2147483645"><br><br>
+                </section>
+                <menu>
+                    <button id="ipo-cancel" type="reset" onclick="closeIPODialog()">Cancel</button>
+                    <button id="ipo-submit" type="submit">Confirm</button>
+                </menu>
+            </form>
+        </dialog>
+    </div>
+
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+
+                <div class="container-fluid">
+                    <div class="row" style="width: 320px;height: 30px">
+                        <div class="col" id="StockNameTextField" style="width: 160px;height: 60px;">
+                            <span style="color: black" id="userDataSpan"></span>
+                        </div>
+                    </div>
+                    <a href="../chatroom/chatroom.html" class="btn btn-info btn-lg active" role="button"
+                       style="position: absolute; right:10px;">Go To Chat</a>
+                </div>
+            </nav>
+
+            <div class="container-fluid" style="height: 70px">
+                <a type="ipo-stock-button" value="Create Stock" onclick="openIPODialog()"
+                   class="btn btn-info btn-lg active" role="button" style="padding: 7px 18px;">Add Engine</a>
+            </div>
+
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 fw-bold">My Executes</p>
+                </div>
+                <div class="card shadow">
+                    <div class="gamesDiv">
+                        <table id="myRunsTable" class="myRunsTable">
+                            <thead>
+                            <tr>
+                                <th>Problem's name</th>
+                                <th>Creator's name</th>
+                                <th>Initial people</th>
+                                <th>Best fitness</th>
+                                <th>Current fitness</th>
+                                <th>Stop condition</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card shadow">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 fw-bold">All Executes</p>
+                </div>
+                <div class="card shadow">
+                    <div class="gamesDiv">
+                        <table id="AllRunsTable" class="myRunsTable">
+                            <thead>
+                            <tr>
+                                <th>Problem's name</th>
+                                <th>Creator's name</th>
+                                <th>Initial people</th>
+                                <th>Best fitness</th>
+                                <th>Current fitness</th>
+                                <th>Stop condition</th>
+                            </tr>
+                            </thead>
+                            <tbody class="tableBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/js/theme.js"></script>
+</body>
+
+</html>
